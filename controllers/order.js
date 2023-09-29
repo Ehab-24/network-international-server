@@ -13,6 +13,9 @@ export async function createOrder(req, res) {
         value: amount,
       },
       emailAddress: customerEmail || "",
+      merchantAttributes: {
+        maskPaymentInfo: true,
+      },
     };
     const url = `https://api-gateway.ngenius-payments.com/transactions/outlets/${reference}/orders`;
     const headers = {
@@ -27,9 +30,9 @@ export async function createOrder(req, res) {
       headers,
     });
 
+    const data = await resp.json();
     console.log(`Order created successfully {_id: ${data._id}}`);
 
-    const data = await resp.json();
     res.status(resp.status).json(data);
   } catch (error) {
     console.log(error);
