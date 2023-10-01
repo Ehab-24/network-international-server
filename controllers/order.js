@@ -31,7 +31,9 @@ export async function createOrder(req, res) {
     });
 
     const data = await resp.json();
-    console.log(`Order created successfully {_id: ${data._id}}`);
+    if(resp.status === 201) {
+      console.log(`Order created successfully {_id: ${data._id}}`);
+    }
 
     res.status(resp.status).json(data);
   } catch (error) {
